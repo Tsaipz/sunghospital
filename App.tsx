@@ -43,7 +43,8 @@ const App: React.FC = () => {
       id: Math.random().toString(36).substr(2, 9),
       timestamp: Date.now(),
       formData: { ...form },
-      ...resultData
+      ...resultData,
+      ageAtApplication: resultData.age 
     };
 
     setCurrentResult(result);
@@ -166,7 +167,6 @@ const App: React.FC = () => {
           </div>
 
           <div className="space-y-6 pt-8 border-t border-gray-100">
-            {/* 根據治療階段顯示日期下拉選單 */}
             <DatePicker 
               label="首次申請日期" 
               value={form.firstApplicationDate} 
@@ -175,7 +175,6 @@ const App: React.FC = () => {
               maxYear={2026}
             />
 
-            {/* 僅「取卵至形成胚胎植入」與「僅胚胎植入」需要顯示植入日期 */}
             {(form.stage === TreatmentStage.Full || form.stage === TreatmentStage.EmbryoOnly) && (
               <DatePicker 
                 label="植入日期" 
@@ -198,74 +197,75 @@ const App: React.FC = () => {
         {/* 右側：結果與歷史 */}
         <div className="lg:col-span-7 space-y-8">
           <section id="result-section" className="bg-white rounded-3xl shadow-xl shadow-gray-200/40 border border-gray-100 overflow-hidden">
-            <div className="p-8">
+            <div className="p-4 sm:p-8">
               <h2 className="text-2xl font-black text-gray-800 mb-6 tracking-tight">補助方案比較</h2>
               
               {currentResult ? (
                 <div className="space-y-6">
                   {/* 警示訊息 */}
                   <div className="bg-[#FFF4E5] p-5 rounded-xl border border-[#FFD8A8] flex items-start space-x-3">
+                    <span className="text-xl text-[#F08C00]">⚠️</span>
                     <p className="text-[#D9480F] text-sm font-bold leading-relaxed">
                       您的申請日期為 民國{parseInt(currentResult.formData.firstApplicationDate.split('-')[0]) - 1911}年{currentResult.formData.firstApplicationDate.split('-')[1]}月{currentResult.formData.firstApplicationDate.split('-')[2]}日 (含) 以前，結案將依 2.0 舊制補助辦理。
                     </p>
                   </div>
 
                   {/* 比較表格 */}
-                  <div className="overflow-hidden border border-gray-100 rounded-xl">
-                    <table className="w-full text-left">
+                  <div className="overflow-x-auto border border-gray-100 rounded-xl custom-scrollbar">
+                    <table className="w-full text-left min-w-[600px]">
                       <thead className="bg-[#F8F9FA]">
                         <tr>
-                          <th className="px-6 py-4 text-sm font-black text-gray-600">補助方案</th>
-                          <th className="px-6 py-4 text-sm font-black text-gray-600 text-center">可申請金額</th>
-                          <th className="px-6 py-4 text-sm font-black text-gray-600 text-center">可植入上限</th>
-                          <th className="px-6 py-4 text-sm font-black text-gray-600 text-center">備註</th>
+                          <th className="px-4 py-4 text-sm font-black text-gray-600">補助方案</th>
+                          <th className="px-4 py-4 text-sm font-black text-gray-600 text-center">可申請金額</th>
+                          <th className="px-4 py-4 text-sm font-black text-gray-600 text-center">可植入上限</th>
+                          <th className="px-4 py-4 text-sm font-black text-gray-600 text-center">備註</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-gray-100">
-                        {/* 2.0 舊制 */}
-                        <tr className="bg-white">
-                          <td className="px-6 py-8">
-                            <p className="font-black text-gray-800">補助 2.0</p>
-                            <p className="text-xs text-gray-400">(舊制)</p>
-                          </td>
-                          <td className="px-6 py-8 text-center">
-                            <span className="text-2xl font-black text-[#2B8A3E]">
-                              {currentResult.subsidy2_0.toLocaleString()}
-                            </span>
-                            <span className="text-xs text-gray-400 ml-1">元</span>
-                          </td>
-                          <td className="px-6 py-8 text-center">
-                            <p className="font-black text-gray-800">{currentResult.transferLimit} 顆</p>
-                            <p className="text-[10px] text-gray-400 mt-1 leading-tight">
-                              依 補助 2.0 (舊制)，植入時年齡({currentResult.ageAtApplication}歲) 上限為 {currentResult.transferLimit} 顆。
-                            </p>
-                          </td>
-                          <td className="px-6 py-8 text-center">
-                            <span className="text-xs font-bold text-gray-500">依此方案<br/>結案</span>
-                          </td>
-                        </tr>
                         {/* 3.0 新制 */}
-                        <tr className="bg-white">
-                          <td className="px-6 py-8">
-                            <p className="font-black text-gray-400">補助 3.0</p>
-                            <p className="text-xs text-gray-400">(新制)</p>
+                        <tr className="bg-pink-50/30 hover:bg-pink-50/50 transition-colors">
+                          <td className="px-4 py-6">
+                            <p className="font-black text-pink-700">補助 3.0</p>
+                            <p className="text-xs text-pink-400">(新制)</p>
                           </td>
-                          <td className="px-6 py-8 text-center">
+                          <td className="px-4 py-6 text-center">
                             <div className="relative inline-block">
-                                <span className="text-2xl font-black text-[#CED4DA]">
+                                <span className="text-2xl font-black text-pink-600">
                                 {currentResult.subsidy3_0.toLocaleString()}
                                 </span>
-                                <span className="text-xs text-gray-400 ml-1">元</span>
+                                <span className="text-xs text-pink-400 ml-1">元</span>
                             </div>
                           </td>
-                          <td className="px-6 py-8 text-center">
-                            <p className="font-black text-gray-400">{currentResult.transferLimit} 顆</p>
-                            <p className="text-[10px] text-gray-300 mt-1 leading-tight">
+                          <td className="px-4 py-6 text-center">
+                            <p className="font-black text-pink-700">{currentResult.transferLimit} 顆</p>
+                            <p className="text-[10px] text-pink-400 mt-1 leading-tight max-w-[150px] mx-auto">
                               依 補助 3.0 (新制)，植入時年齡({currentResult.ageAtApplication}歲) 上限為 {currentResult.transferLimit} 顆。
                             </p>
                           </td>
-                          <td className="px-6 py-8 text-center">
-                            <span className="text-xs font-bold text-gray-300">僅供參考</span>
+                          <td className="px-4 py-6 text-center">
+                            <span className="text-xs font-bold text-pink-500">當前推薦<br/>新制</span>
+                          </td>
+                        </tr>
+                        {/* 2.0 舊制 */}
+                        <tr className="bg-white hover:bg-slate-50 transition-colors">
+                          <td className="px-4 py-6">
+                            <p className="font-black text-slate-400">補助 2.0</p>
+                            <p className="text-xs text-slate-300">(舊制)</p>
+                          </td>
+                          <td className="px-4 py-6 text-center">
+                            <span className="text-2xl font-black text-slate-300">
+                              {currentResult.subsidy2_0.toLocaleString()}
+                            </span>
+                            <span className="text-xs text-slate-300 ml-1">元</span>
+                          </td>
+                          <td className="px-4 py-6 text-center">
+                            <p className="font-black text-slate-300">{currentResult.transferLimit} 顆</p>
+                            <p className="text-[10px] text-slate-300 mt-1 leading-tight max-w-[150px] mx-auto">
+                              依 補助 2.0 (舊制)，植入時年齡({currentResult.ageAtApplication}歲) 上限為 {currentResult.transferLimit} 顆。
+                            </p>
+                          </td>
+                          <td className="px-4 py-6 text-center">
+                            <span className="text-xs font-bold text-slate-300">依此方案<br/>結案</span>
                           </td>
                         </tr>
                       </tbody>
@@ -273,14 +273,16 @@ const App: React.FC = () => {
                   </div>
 
                   {/* 推薦醒目顯示區 */}
-                  <div className="mt-10 p-8 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 shadow-inner text-center animate-pulse">
-                      
-                      <p className="text-amber-800 font-bold text-lg mb-2">您可申請補助金額最高為：</p>
-                      <p className="text-5xl font-black text-orange-600 tracking-tighter">
-                          <span className="text-2xl mr-1">NT$</span>
-                          {Math.max(currentResult.subsidy2_0, currentResult.subsidy3_0).toLocaleString()}
+                  <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-rose-50 border-2 border-pink-200 shadow-inner text-center animate-pulse">
+                      <div className="flex justify-center mb-2">
+                            <span className="text-3xl">🎉</span>
+                      </div>
+                      <p className="text-pink-800 font-bold text-lg mb-2">3.0 新制可申請補助金額：</p>
+                      <p className="text-4xl sm:text-5xl font-black text-pink-600 tracking-tighter">
+                          <span className="text-xl sm:text-2xl mr-1">NT$</span>
+                          {currentResult.subsidy3_0.toLocaleString()}
                       </p>
-                      <p className="text-xs text-amber-600 mt-4 font-bold">※ 實際金額依主管機關核定為準</p>
+                      <p className="text-xs text-pink-400 mt-4 font-bold">※ 實際金額依主管機關核定為準</p>
                   </div>
                 </div>
               ) : (
@@ -288,14 +290,14 @@ const App: React.FC = () => {
                   <div className="w-24 h-24 bg-slate-50 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner">
                     <svg className="w-12 h-12 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
                   </div>
-                  <p className="text-slate-400 font-bold leading-relaxed">請完成左側表單後<br/>點擊計算按鈕獲取補助對照</p>
+                  <p className="text-slate-400 font-bold leading-relaxed px-4">請完成左側表單後<br/>點擊計算按鈕獲取補助對照</p>
                 </div>
               )}
             </div>
           </section>
 
           {/* 歷史紀錄 */}
-          <section className="bg-white p-8 rounded-3xl shadow-xl shadow-gray-200/40 border border-gray-100">
+          <section className="bg-white p-6 sm:p-8 rounded-3xl shadow-xl shadow-gray-200/40 border border-gray-100">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-2">
                 <div className="w-1.5 h-6 bg-slate-300 rounded-full"></div>
@@ -311,16 +313,16 @@ const App: React.FC = () => {
                     onClick={() => loadFromHistory(item)}
                   >
                     <div className="flex justify-between items-center">
-                      <div>
+                      <div className="flex-1 min-w-0 pr-2">
                         <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">
                           {new Date(item.timestamp).toLocaleDateString()}
                         </p>
-                        <p className="text-sm font-black text-slate-700 line-clamp-1">{item.formData.stage}</p>
+                        <p className="text-sm font-black text-slate-700 truncate">{item.formData.stage}</p>
                         <p className="text-xs text-slate-400 mt-1 font-bold">第 {item.formData.treatmentCount} 次療程</p>
                       </div>
-                      <div className="text-right">
+                      <div className="text-right flex-shrink-0">
                         <div className="bg-pink-50 text-pink-600 px-3 py-1.5 rounded-xl text-xs font-black">
-                          ${item.subsidy2_0.toLocaleString()}
+                          ${item.subsidy3_0.toLocaleString()}
                         </div>
                       </div>
                     </div>
@@ -338,8 +340,12 @@ const App: React.FC = () => {
 
       <footer className="mt-20 py-12 text-center bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© 2025 apple web design</p>
+          <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© 2025 SUN HOSPITAL 聖醫院</p>
+          <div className="space-y-1 mb-6">
+            <p className="text-sm text-slate-500 font-bold">此試算僅供參考，實際補助金額以主管機關核定為準</p>
+          </div>
           <p className="text-[10px] text-slate-300 leading-relaxed max-w-xl mx-auto font-bold uppercase">
+             專業不孕症治療 • 最新試管嬰兒技術 • 一站式補助申請諮詢
           </p>
         </div>
       </footer>
@@ -347,6 +353,7 @@ const App: React.FC = () => {
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
           width: 4px;
+          height: 4px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
           background: transparent;
@@ -357,7 +364,7 @@ const App: React.FC = () => {
         }
         @keyframes pulse {
           0%, 100% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.02); opacity: 0.95; }
+          50% { transform: scale(1.01); opacity: 0.98; }
         }
         .animate-pulse {
           animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
