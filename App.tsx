@@ -274,9 +274,7 @@ const App: React.FC = () => {
 
                   {/* 推薦醒目顯示區 */}
                   <div className="mt-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-pink-50 to-rose-50 border-2 border-pink-200 shadow-inner text-center animate-pulse">
-                      <div className="flex justify-center mb-2">
-                            <span className="text-3xl">🎉</span>
-                      </div>
+                      
                       <p className="text-pink-800 font-bold text-lg mb-2">3.0 新制可申請補助金額：</p>
                       <p className="text-4xl sm:text-5xl font-black text-pink-600 tracking-tighter">
                           <span className="text-xl sm:text-2xl mr-1">NT$</span>
