@@ -276,15 +276,7 @@ const App: React.FC = () => {
                     </div>
                   )}
 
-                  {!currentResult.isEligible && (
-                    <div className="bg-rose-50 text-rose-700 p-6 rounded-2xl border border-rose-100 mt-4">
-                      <p className="font-black text-lg flex items-center">
-                        <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd"></path></svg>
-                        不符合補助資格
-                      </p>
-                      <p className="text-sm mt-2 font-medium opacity-80">{currentResult.message}</p>
-                    </div>
-                  )}
+                 
                 </div>
               ) : (
                 <div className="text-center py-20">
