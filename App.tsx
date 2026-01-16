@@ -205,7 +205,6 @@ const App: React.FC = () => {
                 <div className="space-y-6">
                   {/* 警示訊息 */}
                   <div className="bg-[#FFF4E5] p-5 rounded-xl border border-[#FFD8A8] flex items-start space-x-3">
-                    <span className="text-xl text-[#F08C00]">⚠️</span>
                     <p className="text-[#D9480F] text-sm font-bold leading-relaxed">
                       您的申請日期為 民國{parseInt(currentResult.formData.firstApplicationDate.split('-')[0]) - 1911}年{currentResult.formData.firstApplicationDate.split('-')[1]}月{currentResult.formData.firstApplicationDate.split('-')[2]}日 (含) 以前，結案將依 2.0 舊制補助辦理。
                     </p>
@@ -275,9 +274,7 @@ const App: React.FC = () => {
 
                   {/* 推薦醒目顯示區 */}
                   <div className="mt-10 p-8 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 shadow-inner text-center animate-pulse">
-                      <div className="flex justify-center mb-2">
-                            <span className="text-3xl">✨</span>
-                      </div>
+                      
                       <p className="text-amber-800 font-bold text-lg mb-2">您可申請補助金額最高為：</p>
                       <p className="text-5xl font-black text-orange-600 tracking-tighter">
                           <span className="text-2xl mr-1">NT$</span>
@@ -341,9 +338,8 @@ const App: React.FC = () => {
 
       <footer className="mt-20 py-12 text-center bg-white border-t border-gray-100">
         <div className="max-w-4xl mx-auto px-4">
-          <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© 2025 SUN HOSPITAL 聖醫院</p>
+          <p className="text-xs font-black text-slate-400 tracking-[0.2em] uppercase mb-4">© 2025 apple web design</p>
           <p className="text-[10px] text-slate-300 leading-relaxed max-w-xl mx-auto font-bold uppercase">
-             專業不孕症治療 • 最新試管嬰兒技術 • 一站式補助申請諮詢
           </p>
         </div>
       </footer>
