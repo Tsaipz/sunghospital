@@ -344,7 +344,7 @@ const App: React.FC = () => {
                           <span className="text-xl sm:text-2xl mr-1">NT$</span>
                           {(isNewSchemeDate(currentResult.formData.firstApplicationDate) ? currentResult.subsidy3_0 : currentResult.subsidy2_0).toLocaleString()}
                       </p>
-                      <p className="text-xs mt-4 font-bold italic" style={{ color: brandColor + 'AA' }}>※ 實際金額依主管機關核定為準</p>
+                      
                   </div>
                 </div>
               ) : (
